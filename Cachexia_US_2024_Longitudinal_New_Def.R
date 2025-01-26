@@ -10469,7 +10469,39 @@ data.frame(temp %>% filter(Drop90 ==1) %>%
   rename("First_CCh"="Month_Min") %>%
   inner_join(New_Primary_Cancer_Box) %>%
       mutate(ElapsedCCh=(First_CCh-metastasis_onset)) %>%
-#  filter(ElapsedCCh>(-12)) %>%
+ filter(ElapsedCCh>(-12)) %>%
+  group_by( Primary_Cancer) %>% 
+    summarise(mean=mean(ElapsedCCh)))
+
+
+data.frame(temp %>% filter(Drop2_20 ==1|Drop95 ==1) %>% 
+  group_by(patid) %>% filter(Month_Min==min(Month_Min)) %>%  select(patid,Month_Min) %>% distinct() %>%
+  rename("First_CCh"="Month_Min") %>%
+  inner_join(New_Primary_Cancer_Box) %>%
+      mutate(ElapsedCCh=(First_CCh-metastasis_onset)) %>%
+  filter(ElapsedCCh>(-12)) %>%
+  group_by( Primary_Cancer) %>% 
+    summarise(mean=mean(ElapsedCCh)))
+
+
+
+
+data.frame(temp %>% filter(Drop90 ==1) %>% 
+  group_by(patid) %>% filter(Month_Min==min(Month_Min)) %>%  select(patid,Month_Min) %>% distinct() %>%
+  rename("First_CCh"="Month_Min") %>%
+  inner_join(New_Primary_Cancer_Box) %>%
+      mutate(ElapsedCCh=(First_CCh-metastasis_onset)) %>%
+ filter(First_CCh>=metastasis_onset) %>%
+  group_by( Primary_Cancer) %>% 
+    summarise(mean=mean(ElapsedCCh)))
+
+
+data.frame(temp %>% filter(Drop2_20 ==1|Drop95 ==1) %>% 
+  group_by(patid) %>% filter(Month_Min==min(Month_Min)) %>%  select(patid,Month_Min) %>% distinct() %>%
+  rename("First_CCh"="Month_Min") %>%
+  inner_join(New_Primary_Cancer_Box) %>%
+      mutate(ElapsedCCh=(First_CCh-metastasis_onset)) %>%
+ filter(First_CCh>=metastasis_onset) %>%
   group_by( Primary_Cancer) %>% 
     summarise(mean=mean(ElapsedCCh)))
 
